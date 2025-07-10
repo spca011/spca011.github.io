@@ -1,4 +1,8 @@
-layout: post title: "Set the four projects"
+---
+layout: post
+title: "Set the four projects"
+date: 2025-07-10
+---
 
 I've set the four project that I want to end up by this year.
 I also made a development introduction page and blog in GitLap.
