@@ -1,0 +1,26 @@
+---
+layout: default
+title: Dev Log
+---
+
+<section id="blog-list" class="py-20 px-4 bg-gray-900 min-h-screen">
+    <div class="container mx-auto max-w-3xl">
+        <h2 class="text-4xl font-bold text-center mb-4">Dev Log</h2>
+        <p class="text-center text-gray-400 mb-12">Documenting the journey of our projects.</p>
+        
+        <!-- Jekyll automatically fetches all posts and creates a list. -->
+        {% for post in site.posts %}
+        <div class="blog-post fade-in-section">
+            <a href="{{ post.url | relative_url }}" class="block hover:bg-gray-800 rounded-lg -m-4 p-4 transition">
+                <div class="blog-post-title">{{ post.title }}</div>
+                <div class="blog-post-date">{{ post.date | date: "%B %d, %Y" }}</div>
+                <div class="blog-post-content">
+                    <!-- The excerpt automatically takes the first paragraph of the post. -->
+                    {{ post.excerpt }}
+                </div>
+            </a>
+        </div>
+        {% endfor %}
+
+    </div>
+</section>

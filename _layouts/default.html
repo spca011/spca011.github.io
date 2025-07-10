@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <!-- The page title will be dynamically changed -->
+    <title>{{ page.title | default: "Project Kick-off & Dev Log" }}</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@400;700;900&family=Inter:wght@400;700;900&display=swap" rel="stylesheet">
+    <style>
+        /* Using Inter as the primary font, with Noto Sans KR as a fallback */
+        body { font-family: 'Inter', 'Noto Sans KR', sans-serif; background-color: #111827; color: #F3F4F6; }
+        .gradient-text { background: linear-gradient(90deg, #38bdf8, #818cf8); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
+        .card { background-color: #1F2937; border: 1px solid #374151; transition: transform 0.3s ease, box-shadow 0.3s ease; }
+        .card:hover { transform: translateY(-10px); box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.3), 0 10px 10px -5px rgba(0, 0, 0, 0.1); }
+        .fade-in-section { opacity: 0; transform: translateY(20px); transition: opacity 0.6s ease-out, transform 0.6s ease-out; }
+        .fade-in-section.is-visible { opacity: 1; transform: translateY(0); }
+        .blog-post { background-color: #1F2937; border-left: 4px solid #4f46e5; padding: 1.5rem; margin-bottom: 1.5rem; border-radius: 0 8px 8px 0; }
+        .blog-post-title { font-size: 1.5rem; font-weight: bold; color: #e5e7eb; margin-bottom: 0.25rem; }
+        .blog-post-date { font-size: 0.9rem; color: #9ca3af; margin-bottom: 1rem; }
+        .blog-post-content { font-size: 1rem; color: #d1d5db; line-height: 1.6; }
+    </style>
+</head>
+<body class="antialiased">
+
+    <!-- The actual content of each page is inserted here -->
+    {{ content }}
+
+    <!-- Call to Action Footer -->
+    <footer id="contact" class="bg-gray-900 py-20 px-4 text-center">
+        <div class="container mx-auto">
+            <h2 class="text-4xl font-bold mb-4">READY TO BUILD THE FUTURE?</h2>
+            <p class="text-lg text-gray-300 mb-8 max-w-xl mx-auto">Don't hesitate. Your participation is the most crucial piece of our project.</p>
+            <a href="mailto:your-email@example.com?subject=Project Team Application" class="bg-indigo-600 hover:bg-indigo-700 text-white font-bold py-4 px-10 rounded-full text-xl transition duration-300">
+                Apply Now
+            </a>
+            <p class="mt-8 text-gray-500">Copyright © 2025. All rights reserved.</p>
+        </div>
+    </footer>
+
+    <script>
+        const sections = document.querySelectorAll('.fade-in-section');
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('is-visible');
+                }
+            });
+        }, { threshold: 0.1 });
+        sections.forEach(section => { observer.observe(section); });
+    </script>
+
+</body>
+</html>
