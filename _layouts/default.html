@@ -28,6 +28,29 @@
         .blog-post-title { font-size: 1.5rem; font-weight: bold; color: #e5e7eb; margin-bottom: 0.25rem; }
         .blog-post-date { font-size: 0.9rem; color: #9ca3af; margin-bottom: 1rem; }
         .blog-post-content { font-size: 1rem; color: #d1d5db; line-height: 1.6; }
+        .blog-post-content h1,
+        .blog-post-content h2,
+        .blog-post-content h3,
+        .blog-post-content h4,
+        .blog-post-content h5,
+        .blog-post-content h6 {
+            color: #fff;
+            font-weight: bold;
+            margin-top: 2em;
+            margin-bottom: 0.5em;
+        }
+        .blog-post-content h1 { font-size: 2rem; }
+        .blog-post-content h2 { font-size: 1.5rem; }
+        .blog-post-content h3 { font-size: 1.25rem; }
+        .blog-post-content ul,
+        .blog-post-content ol {
+            margin-left: 1.5em;
+            margin-bottom: 1em;
+        }
+        .blog-post-content li {
+            margin-bottom: 0.5em;
+            list-style: disc inside;
+        }
     </style>
 </head>
 <body class="antialiased">
@@ -35,17 +58,15 @@
     <!-- The actual content of each page is inserted here -->
     {{ content }}
 
-    <!-- Call to Action Footer
-    <footer id="contact" class="bg-gray-900 py-20 px-4 text-center">
+    <footer id="contact" class="bg-gray-900 py-10 px-4 text-center text-gray-400">
         <div class="container mx-auto">
-            <h2 class="text-4xl font-bold mb-4">READY TO BUILD THE FUTURE?</h2>
-            <p class="text-lg text-gray-300 mb-8 max-w-xl mx-auto">Don't hesitate. Your participation is the most crucial piece of our project.</p>
-            <a href="mailto:your-email@example.com?subject=Project Team Application" class="bg-indigo-600 hover:bg-indigo-700 text-white font-bold py-4 px-10 rounded-full text-xl transition duration-300">
-                Apply Now
-            </a>
-            <p class="mt-8 text-gray-500">Copyright © 2025. All rights reserved.</p>
+            <p class="mb-2"><strong>Company:</strong> Next Level</p>
+            <p class="mb-2"><strong>Officer:</strong> Seungho Lee</p>
+            <p class="mb-2"><strong>Mobile:</strong> <a href="tel:0430602622" class="hover:text-white">0430 602 622</a></p>
+            <p class="mb-4"><strong>Email:</strong> <a href="mailto:spca011@gmail.com" class="hover:text-white">spca011@gmail.com</a></p>
+            <p class="text-sm text-gray-500 mt-8">Copyright © {% now 'Y' %} Next Level. All rights reserved.</p>
         </div>
-    </footer> -->
+    </footer>
 
     <script>
         const sections = document.querySelectorAll('.fade-in-section');
