@@ -28,12 +28,180 @@ title: Project Kick-off & Dev Log
     <div class="container mx-auto">
         <h2 class="text-4xl font-bold text-center mb-12">OUR PROJECTS</h2>
         <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-2 gap-10">
-            <!-- LingoLeap Card -->
+            <!-- LiveEnglish Card -->
             <div class="card rounded-2xl overflow-hidden fade-in-section">
                 <div class="p-8">
                     <h3 class="text-3xl font-bold mb-2">LiveEnglish</h3>
                     <p class="text-sky-400 mb-4">Your personal AI English trainer for what you want to say.</p>
-                    <div class="h-48 bg-gray-700 rounded-lg mb-6 flex items-center justify-center"><img src="https://placehold.co/400x200/1f2937/9ca3af?text=AI+Chat+Demo+GIF" alt="English Learning App Demo" class="w-full h-full object-cover rounded-lg"></div>
+                    <div class="h-56 bg-gray-800 rounded-lg mb-6 flex items-center justify-center overflow-hidden">
+                        <svg viewBox="0 0 400 225" xmlns="http://www.w3.org/2000/svg" class="w-full h-full">
+                            <!-- Define styles, fonts, and gradients -->
+                            <defs>
+                                <linearGradient id="bg-gradient" x1="0%" y1="0%" x2="100%" y2="100%">
+                                    <stop offset="0%" style="stop-color:#74b9ff" />
+                                    <stop offset="100%" style="stop-color:#0984e3" />
+                                </linearGradient>
+                                <linearGradient id="suggestion-gradient" x1="0%" y1="0%" x2="100%" y2="0%">
+                                    <stop offset="0%" style="stop-color:#fdcb6e" />
+                                    <stop offset="100%" style="stop-color:#e17055" />
+                                </linearGradient>
+                                <style>
+                                    @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap');
+                                    .base-text { font-family: 'Poppins', sans-serif; }
+                                    .title-text { font-size: 14px; fill: white; font-weight: 700; }
+                                    .subtitle-text { font-size: 6px; fill: white; opacity: 0.9; }
+                                    .input-text { font-size: 6px; fill: #333; }
+                                    .placeholder-text { font-size: 6px; fill: #777; }
+                                    .suggestion-text { font-size: 5.5px; fill: white; font-weight: 500; }
+                                    .button-text { font-size: 7px; fill: white; font-weight: 600; }
+                                    .save-button-text { font-size: 4px; fill: white; font-weight: 500; }
+
+                                    .fade-in { animation: fadeIn 0.4s ease-in-out forwards; }
+                                    .fade-out { animation: fadeOut 0.4s ease-in-out forwards; }
+                                    .slide-up { animation: slideUp 0.5s ease-in-out forwards; }
+                                    .click-effect { animation: clickEffect 0.2s ease-out; }
+
+                                    @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
+                                    @keyframes fadeOut { from { opacity: 1; } to { opacity: 0; } }
+                                    @keyframes slideUp { from { opacity: 0; transform: translateY(15px); } to { opacity: 1; transform: translateY(0); } }
+                                    @keyframes clickEffect { 0% { transform: scale(1); } 50% { transform: scale(0.96); } 100% { transform: scale(1); } }
+                                    
+                                    #typing-cursor { animation: blink 1s step-end infinite; }
+                                    @keyframes blink { from, to { stroke-opacity: 1 } 50% { stroke-opacity: 0 } }
+                                </style>
+                            </defs>
+
+                            <!-- Background -->
+                            <rect width="400" height="225" fill="url(#bg-gradient)" />
+
+                            <!-- Main Card -->
+                            <rect x="20" y="45" width="360" height="160" rx="15" fill="rgba(255, 255, 255, 0.95)" />
+
+                            <!-- Header -->
+                            <g text-anchor="middle">
+                                <text x="200" y="25" class="base-text title-text">🌊 LiveEnglish</text>
+                                <text x="200" y="36" class="base-text subtitle-text">Your personal AI English trainer for what you want to say.</text>
+                            </g>
+                            
+                            <!-- Scene 1: User types in the input field -->
+                            <g id="scene1">
+                                <rect x="40" y="60" width="320" height="25" rx="12.5" fill="white" stroke="#E0E0E0" stroke-width="1"/>
+                                <text id="user-input" x="50" y="75.5" class="base-text input-text"></text>
+                                <text id="placeholder" x="50" y="75.5" class="base-text placeholder-text">Type what you want to say in Korean or English...</text>
+                                <path id="typing-cursor" d="M50 67 v13" stroke="#333" stroke-width="1" />
+                                <rect id="search-btn" x="40" y="95" width="320" height="28" rx="14" fill="#0984e3" style="transform-origin: center;" />
+                                <text x="200" y="111" class="base-text button-text" text-anchor="middle">��‍♂️ Get Suggestions</text>
+                            </g>
+
+                            <!-- Scene 2: Loading spinner -->
+                            <g id="scene2" opacity="0" style="transform-box: fill-box; transform-origin: center;">
+                                <g>
+                                    <circle cx="200" cy="120" r="15" stroke="#e0e0e0" stroke-width="3" fill="none" />
+                                    <path d="M 200 105 A 15 15 0 0 1 215 120" stroke="#0984e3" stroke-width="3" fill="none">
+                                        <animateTransform attributeName="transform" type="rotate" from="0 200 120" to="360 200 120" dur="1s" repeatCount="indefinite" />
+                                    </path>
+                                    <text x="200" y="150" class="base-text" font-size="6px" fill="#555" text-anchor="middle">Finding the perfect expression...</text>
+                                </g>
+                            </g>
+
+                            <!-- Scene 3: Suggestions appear -->
+                            <g id="scene3" opacity="0">
+                                <g class="suggestion-card" style="animation-delay: 0.1s;">
+                                    <rect x="40" y="55" width="320" height="22" rx="8" fill="url(#suggestion-gradient)" />
+                                    <text x="50" y="69" class="base-text suggestion-text">The weather is so nice today, I really hope it doesn't rain.</text>
+                                    <rect class="save-btn" id="save-btn-1" x="325" y="62" width="25" height="8" rx="4" fill="rgba(255,255,255,0.2)" stroke="rgba(255,255,255,0.5)" stroke-width="0.5" style="transform-origin: 337.5px 66px;"/>
+                                    <text x="337.5" y="67.5" class="base-text save-button-text" text-anchor="middle">💾 Save</text>
+                                </g>
+                                <!-- Other suggestion cards -->
+                                <g class="suggestion-card" style="animation-delay: 0.2s;"><rect x="40" y="82" width="320" height="22" rx="8" fill="url(#suggestion-gradient)" /><text x="50" y="96" class="base-text suggestion-text">The weather is beautiful today, I really hope it stays dry.</text><rect class="save-btn" x="325" y="89" width="25" height="8" rx="4" fill="rgba(255,255,255,0.2)" stroke="rgba(255,255,255,0.5)" stroke-width="0.5"/><text x="337.5" y="94.5" class="base-text save-button-text" text-anchor="middle">💾 Save</text></g>
+                                <g class="suggestion-card" style="animation-delay: 0.3s;"><rect x="40" y="109" width="320" height="22" rx="8" fill="url(#suggestion-gradient)" /><text x="50" y="123" class="base-text suggestion-text">It's such a nice day, please let it not rain today.</text><rect class="save-btn" x="325" y="116" width="25" height="8" rx="4" fill="rgba(255,255,255,0.2)" stroke="rgba(255,255,255,0.5)" stroke-width="0.5"/><text x="337.5" y="121.5" class="base-text save-button-text" text-anchor="middle">💾 Save</text></g>
+                                <g class="suggestion-card" style="animation-delay: 0.4s;"><rect x="40" y="136" width="320" height="22" rx="8" fill="url(#suggestion-gradient)" /><text x="50" y="150" class="base-text suggestion-text">The weather's great today, I'm really hoping for no rain.</text><rect class="save-btn" x="325" y="143" width="25" height="8" rx="4" fill="rgba(255,255,255,0.2)" stroke="rgba(255,255,255,0.5)" stroke-width="0.5"/><text x="337.5" y="148.5" class="base-text save-button-text" text-anchor="middle">💾 Save</text></g>
+                                <g class="suggestion-card" style="animation-delay: 0.5s;"><rect x="40" y="163" width="320" height="22" rx="8" fill="url(#suggestion-gradient)" /><text x="50" y="177" class="base-text suggestion-text">What a lovely day! I hope it doesn't rain.</text><rect class="save-btn" x="325" y="170" width="25" height="8" rx="4" fill="rgba(255,255,255,0.2)" stroke="rgba(255,255,255,0.5)" stroke-width="0.5"/><text x="337.5" y="175.5" class="base-text save-button-text" text-anchor="middle">💾 Save</text></g>
+                            </g>
+                            
+                            <!-- Animation Control Script -->
+                            <script type="text/javascript">
+                                // <![CDATA[
+                                const scene1 = document.getElementById('scene1');
+                                const scene2 = document.getElementById('scene2');
+                                const scene3 = document.getElementById('scene3');
+                                const userInputEl = document.getElementById('user-input');
+                                const placeholderEl = document.getElementById('placeholder');
+                                const typingCursor = document.getElementById('typing-cursor');
+                                const searchBtn = document.getElementById('search-btn');
+                                
+                                const textToType = "오늘 날씨가 너무 좋은데 오늘 비가 오지 않았으면 좋겠어";
+                                let charIndex = 0;
+
+                                function type() {
+                                    placeholderEl.style.display = 'none';
+                                    if (charIndex < textToType.length) {
+                                        userInputEl.textContent += textToType.charAt(charIndex);
+                                        const textWidth = userInputEl.getComputedTextLength();
+                                        typingCursor.setAttribute('transform', `translate(${textWidth}, 0)`);
+                                        charIndex++;
+                                        setTimeout(type, 100);
+                                    } else {
+                                        typingCursor.style.display = 'none';
+                                        setTimeout(startTransition, 1000);
+                                    }
+                                }
+
+                                function startTransition() {
+                                    // Directly trigger the click effect on the search button
+                                    searchBtn.classList.add('click-effect');
+                                    
+                                    // Transition to the loading scene shortly after the click effect starts
+                                    setTimeout(() => {
+                                        scene1.classList.add('fade-out');
+                                        scene2.style.opacity = '1';
+                                        scene2.classList.add('fade-in');
+                                    }, 150);
+                                    
+                                    // After loading, show suggestions
+                                    setTimeout(() => {
+                                        scene2.classList.remove('fade-in');
+                                        scene2.classList.add('fade-out');
+                                        scene3.style.opacity = '1';
+                                        scene3.classList.add('fade-in');
+                                        document.querySelectorAll('.suggestion-card').forEach(card => card.classList.add('slide-up'));
+                                    }, 2000);
+
+                                    // Simulate clicking the first save button
+                                    setTimeout(() => {
+                                        const saveBtn = document.getElementById('save-btn-1');
+                                        saveBtn.classList.add('click-effect');
+                                    }, 2800);
+
+                                    // Restart the whole animation
+                                    setTimeout(restart, 7000);
+                                }
+                                
+                                function restart() {
+                                    // Reset all scenes and elements to their initial state
+                                    scene1.classList.remove('fade-out');
+                                    scene2.style.opacity = '0';
+                                    scene2.classList.remove('fade-out');
+                                    scene3.style.opacity = '0';
+                                    scene3.classList.remove('fade-in');
+                                    document.querySelectorAll('.suggestion-card').forEach(card => card.classList.remove('slide-up'));
+                                    
+                                    charIndex = 0;
+                                    userInputEl.textContent = '';
+                                    typingCursor.style.display = 'block';
+                                    typingCursor.setAttribute('transform', `translate(0, 0)`);
+                                    placeholderEl.style.display = 'block';
+                                    
+                                    // Start the typing animation again after a short delay
+                                    setTimeout(type, 1000);
+                                }
+
+                                // Initial start of the animation
+                                setTimeout(type, 1500);
+                                // ]]>
+                            </script>
+                        </svg>
+                    </div>
                 </div>
             </div>
             <!-- AlgoWealth Card -->
