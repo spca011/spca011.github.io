@@ -12,7 +12,7 @@
     <style>
         /* Using Inter as the primary font, with Noto Sans KR as a fallback */
         body { font-family: 'Inter', 'Noto Sans KR', sans-serif; background-color: #111827; color: #F3F4F6; }
-        .gradient-text { background: linear-gradient(90deg, #38bdf8, #818cf8); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
+        .gradient-text { background: linear-gradient(90deg, #38bdf8, #818cf8); -background-clip: text; -webkit-text-fill-color: transparent; }
         .card { background-color: #1F2937; border: 1px solid #374151; transition: transform 0.3s ease, box-shadow 0.3s ease; }
         .card:hover { transform: translateY(-10px); box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.3), 0 10px 10px -5px rgba(0, 0, 0, 0.1); }
         .fade-in-section { opacity: 0; transform: translateY(20px); transition: opacity 0.6s ease-out, transform 0.6s ease-out; }
@@ -28,7 +28,7 @@
     <!-- The actual content of each page is inserted here -->
     {{ content }}
 
-    <!-- Call to Action Footer -->
+    <!-- Call to Action Footer
     <footer id="contact" class="bg-gray-900 py-20 px-4 text-center">
         <div class="container mx-auto">
             <h2 class="text-4xl font-bold mb-4">READY TO BUILD THE FUTURE?</h2>
@@ -38,7 +38,7 @@
             </a>
             <p class="mt-8 text-gray-500">Copyright © 2025. All rights reserved.</p>
         </div>
-    </footer>
+    </footer> -->
 
     <script>
         const sections = document.querySelectorAll('.fade-in-section');
