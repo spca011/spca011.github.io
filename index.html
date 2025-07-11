@@ -336,6 +336,8 @@ title: Project Kick-off & Dev Log
 
 <script>
 document.addEventListener('DOMContentLoaded', function () {
+    
+    // --- BLOG PAGINATION LOGIC ---
     const postsPerPage = 3;
     const postsList = document.getElementById('posts-list');
     const blogPosts = postsList.querySelectorAll('.blog-post');
@@ -343,239 +345,240 @@ document.addEventListener('DOMContentLoaded', function () {
     const totalPosts = blogPosts.length;
 
     if (totalPosts <= postsPerPage) {
-        paginationContainer.style.display = 'none';
-        return;
-    }
+        if(paginationContainer) paginationContainer.style.display = 'none';
+    } else {
+        const totalPages = Math.ceil(totalPosts / postsPerPage);
+        let currentPage = 1;
 
-    const totalPages = Math.ceil(totalPosts / postsPerPage);
-    let currentPage = 1;
+        function showPage(page) {
+            currentPage = page;
+            const startIndex = (page - 1) * postsPerPage;
+            const endIndex = startIndex + postsPerPage;
 
-    function showPage(page) {
-        currentPage = page;
-        const startIndex = (page - 1) * postsPerPage;
-        const endIndex = startIndex + postsPerPage;
-
-        blogPosts.forEach((post, index) => {
-            if (index >= startIndex && index < endIndex) {
-                post.style.display = 'block';
-            } else {
-                post.style.display = 'none';
-            }
-        });
-        renderPaginationButtons();
-    }
-
-    function renderPaginationButtons() {
-        paginationContainer.innerHTML = ''; // Clear old buttons
-
-        // Previous button
-        const prevButton = document.createElement('button');
-        prevButton.innerHTML = '&larr; Previous';
-        prevButton.disabled = currentPage === 1;
-        prevButton.className = 'bg-gray-700 hover:bg-gray-600 text-white font-bold py-2 px-4 rounded-full transition disabled:opacity-50 disabled:cursor-not-allowed';
-        prevButton.addEventListener('click', () => {
-            if (currentPage > 1) {
-                showPage(currentPage - 1);
-            }
-        });
-        paginationContainer.appendChild(prevButton);
-
-        // Page number info
-        const pageInfo = document.createElement('span');
-        pageInfo.innerText = `Page ${currentPage} of ${totalPages}`;
-        pageInfo.className = 'text-gray-400 px-2';
-        paginationContainer.appendChild(pageInfo);
-
-        // Next button
-        const nextButton = document.createElement('button');
-        nextButton.innerHTML = 'Next &rarr;';
-        nextButton.disabled = currentPage === totalPages;
-        nextButton.className = 'bg-gray-700 hover:bg-gray-600 text-white font-bold py-2 px-4 rounded-full transition disabled:opacity-50 disabled:cursor-not-allowed';
-        nextButton.addEventListener('click', () => {
-            if (currentPage < totalPages) {
-                showPage(currentPage + 1);
-            }
-        });
-        paginationContainer.appendChild(nextButton);
-    }
-
-    showPage(1);
-
-    document.addEventListener('DOMContentLoaded', function() {
-        const keyFeaturesModal = document.getElementById('key-features-modal');
-        const closeModalBtn = document.getElementById('close-modal-btn');
-        const modalTitle = document.getElementById('modal-title');
-        const featureListContainer = document.getElementById('feature-list-container');
-        const addFeatureForm = document.getElementById('add-feature-form');
-        const keyFeaturesBtns = document.querySelectorAll('.key-features-btn');
-
-        let currentProject = null;
-
-        function getFeatures(projectName) {
-            return JSON.parse(localStorage.getItem(`features_${projectName}`)) || [];
+            blogPosts.forEach((post, index) => {
+                post.style.display = (index >= startIndex && index < endIndex) ? 'block' : 'none';
+            });
+            renderPaginationButtons();
         }
 
-        function saveFeatures(projectName, features) {
-            localStorage.setItem(`features_${projectName}`, JSON.stringify(features));
+        function renderPaginationButtons() {
+            paginationContainer.innerHTML = ''; // Clear old buttons
+
+            const prevButton = document.createElement('button');
+            prevButton.innerHTML = '&larr; Previous';
+            prevButton.disabled = currentPage === 1;
+            prevButton.className = 'bg-gray-700 hover:bg-gray-600 text-white font-bold py-2 px-4 rounded-full transition disabled:opacity-50 disabled:cursor-not-allowed';
+            prevButton.addEventListener('click', () => { if (currentPage > 1) showPage(currentPage - 1); });
+            paginationContainer.appendChild(prevButton);
+
+            const pageInfo = document.createElement('span');
+            pageInfo.innerText = `Page ${currentPage} of ${totalPages}`;
+            pageInfo.className = 'text-gray-400 px-2';
+            paginationContainer.appendChild(pageInfo);
+
+            const nextButton = document.createElement('button');
+            nextButton.innerHTML = 'Next &rarr;';
+            nextButton.disabled = currentPage === totalPages;
+            nextButton.className = 'bg-gray-700 hover:bg-gray-600 text-white font-bold py-2 px-4 rounded-full transition disabled:opacity-50 disabled:cursor-not-allowed';
+            nextButton.addEventListener('click', () => { if (currentPage < totalPages) showPage(currentPage + 1); });
+            paginationContainer.appendChild(nextButton);
         }
 
-        function renderFeatures(projectName) {
-            const features = getFeatures(projectName);
-            featureListContainer.innerHTML = '';
-            if (features.length === 0) {
-                featureListContainer.innerHTML = `<p class="text-gray-400">No key features defined yet.</p>`;
-                return;
-            }
+        showPage(1);
+    }
+    
+    // --- KEY FEATURES MODAL LOGIC ---
+    const keyFeaturesModal = document.getElementById('key-features-modal');
+    const closeModalBtn = document.getElementById('close-modal-btn');
+    const modalTitle = document.getElementById('modal-title');
+    const featureListContainer = document.getElementById('feature-list-container');
+    const addFeatureForm = document.getElementById('add-feature-form');
+    const keyFeaturesBtns = document.querySelectorAll('.key-features-btn');
 
-            features.forEach(feature => {
-                const featureEl = document.createElement('div');
-                featureEl.className = `bg-gray-700 p-4 rounded-lg flex items-center justify-between ${feature.completed ? 'opacity-50' : ''}`;
-                featureEl.innerHTML = `
-                    <div class="flex items-center">
-                        <input type="checkbox" data-id="${feature.id}" class="form-checkbox h-5 w-5 bg-gray-900 border-gray-600 text-sky-500 focus:ring-sky-500" ${feature.completed ? 'checked' : ''}>
-                        <div class="ml-4">
-                            <p class="font-bold ${feature.completed ? 'line-through' : ''}">${feature.name}</p>
-                            <p class="text-sm text-gray-400">
-                                ${feature.startDate} &rarr; ${feature.endDate}
-                            </p>
-                        </div>
+    let currentProject = null;
+
+    function getFeatures(projectName) {
+        return JSON.parse(localStorage.getItem(`features_${projectName}`)) || [];
+    }
+
+    function saveFeatures(projectName, features) {
+        localStorage.setItem(`features_${projectName}`, JSON.stringify(features));
+    }
+
+    function renderFeatures(projectName) {
+        const features = getFeatures(projectName);
+        featureListContainer.innerHTML = '';
+        if (features.length === 0) {
+            featureListContainer.innerHTML = `<p class="text-gray-400">No key features defined yet.</p>`;
+            return;
+        }
+
+        features.forEach(feature => {
+            const featureEl = document.createElement('div');
+            featureEl.className = `bg-gray-700 p-4 rounded-lg flex items-center justify-between ${feature.completed ? 'opacity-50' : ''}`;
+            featureEl.innerHTML = `
+                <div class="flex items-center">
+                    <input type="checkbox" data-id="${feature.id}" class="form-checkbox h-5 w-5 bg-gray-900 border-gray-600 text-sky-500 focus:ring-sky-500" ${feature.completed ? 'checked' : ''}>
+                    <div class="ml-4">
+                        <p class="font-bold ${feature.completed ? 'line-through' : ''}">${feature.name}</p>
+                        <p class="text-sm text-gray-400">
+                            ${feature.startDate} &rarr; ${feature.endDate}
+                        </p>
                     </div>
-                    <button data-id="${feature.id}" class="text-red-500 hover:text-red-400 font-bold">Delete</button>
-                `;
-                featureListContainer.appendChild(featureEl);
-            });
-        }
-
-        function openModal(projectName) {
-            currentProject = projectName;
-            modalTitle.innerText = `${currentProject} - Key Features`;
-            renderFeatures(currentProject);
-            keyFeaturesModal.classList.remove('hidden');
-            keyFeaturesModal.classList.add('flex');
-        }
-
-        function closeModal() {
-            keyFeaturesModal.classList.add('hidden');
-            keyFeaturesModal.classList.remove('flex');
-            currentProject = null;
-        }
-
-        keyFeaturesBtns.forEach(btn => {
-            btn.addEventListener('click', () => {
-                const projectName = btn.dataset.project;
-                openModal(projectName);
-            });
-        });
-
-        closeModalBtn.addEventListener('click', closeModal);
-        keyFeaturesModal.addEventListener('click', (e) => {
-            if (e.target === keyFeaturesModal) {
-                closeModal();
-            }
-        });
-
-        addFeatureForm.addEventListener('submit', (e) => {
-            e.preventDefault();
-            const featureNameInput = document.getElementById('feature-name');
-            const featureStartDateInput = document.getElementById('feature-start-date');
-            const featureEndDateInput = document.getElementById('feature-end-date');
-
-            const newFeature = {
-                id: Date.now(),
-                name: featureNameInput.value,
-                startDate: featureStartDateInput.value,
-                endDate: featureEndDateInput.value,
-                completed: false
-            };
-
-            if (!newFeature.name || !newFeature.startDate || !newFeature.endDate) {
-                alert('Please fill out all fields.');
-                return;
-            }
-
-            const features = getFeatures(currentProject);
-            features.push(newFeature);
-            saveFeatures(currentProject, features);
-            renderFeatures(currentProject);
-            addFeatureForm.reset();
-        });
-
-        featureListContainer.addEventListener('click', (e) => {
-            const id = e.target.dataset.id;
-            if (!id) return;
-
-            let features = getFeatures(currentProject);
-
-            if (e.target.type === 'checkbox') {
-                features = features.map(f => f.id == id ? { ...f, completed: !f.completed } : f);
-            } else if (e.target.tagName === 'BUTTON') {
-                features = features.filter(f => f.id != id);
-            }
-            
-            saveFeatures(currentProject, features);
-            renderFeatures(currentProject);
-        });
-
-        // --- Project Timeline ---
-        mermaid.initialize({ startOnLoad: false, theme: 'dark' });
-
-        const timelineModal = document.getElementById('project-timeline-modal');
-        const closeTimelineModalBtn = document.getElementById('close-timeline-modal-btn');
-        const timelineModalTitle = document.getElementById('timeline-modal-title');
-        const timelineContainer = document.getElementById('timeline-container');
-        const projectTimelineBtns = document.querySelectorAll('.project-timeline-btn');
-
-        function openTimelineModal(projectName) {
-            timelineModalTitle.innerText = `${projectName} - Timeline`;
-            const features = getFeatures(projectName);
-            
-            let ganttChart = `
-                gantt
-                dateFormat  YYYY-MM-DD
-                title       Project Timeline
+                </div>
+                <button data-id="${feature.id}" class="text-red-500 hover:text-red-400 font-bold">Delete</button>
             `;
+            featureListContainer.appendChild(featureEl);
+        });
+    }
 
-            if (features.length > 0) {
-                features.forEach(feature => {
-                    const state = feature.completed ? 'done' : 'active';
-                    ganttChart += `
-                    section ${feature.name}
-                    ${feature.name} :${state}, ${feature.id}, ${feature.startDate}, ${feature.endDate}
-                    `;
-                });
-            } else {
-                ganttChart += `
-                section No Features
-                No tasks yet :done, 2024-01-01, 1d
-                `;
-            }
+    function openModal(projectName) {
+        currentProject = projectName;
+        modalTitle.innerText = `${currentProject} - Key Features`;
+        renderFeatures(currentProject);
+        keyFeaturesModal.classList.remove('hidden');
+        keyFeaturesModal.classList.add('flex');
+    }
 
-            timelineContainer.innerHTML = `<div class="mermaid">${ganttChart}</div>`;
-            mermaid.init(undefined, timelineContainer.querySelector('.mermaid'));
+    function closeModal() {
+        keyFeaturesModal.classList.add('hidden');
+        keyFeaturesModal.classList.remove('flex');
+        currentProject = null;
+    }
 
-            timelineModal.classList.remove('hidden');
-            timelineModal.classList.add('flex');
+    keyFeaturesBtns.forEach(btn => {
+        btn.addEventListener('click', () => {
+            const projectName = btn.dataset.project;
+            openModal(projectName);
+        });
+    });
+
+    closeModalBtn.addEventListener('click', closeModal);
+    keyFeaturesModal.addEventListener('click', (e) => {
+        if (e.target === keyFeaturesModal) closeModal();
+    });
+
+    addFeatureForm.addEventListener('submit', (e) => {
+        e.preventDefault();
+        const featureNameInput = document.getElementById('feature-name');
+        const featureStartDateInput = document.getElementById('feature-start-date');
+        const featureEndDateInput = document.getElementById('feature-end-date');
+
+        const newFeature = {
+            id: Date.now(),
+            name: featureNameInput.value,
+            startDate: featureStartDateInput.value,
+            endDate: featureEndDateInput.value,
+            completed: false
+        };
+
+        if (!newFeature.name || !newFeature.startDate || !newFeature.endDate) {
+            alert('Please fill out all fields.');
+            return;
         }
 
-        function closeTimelineModal() {
-            timelineModal.classList.add('hidden');
-            timelineModal.classList.remove('flex');
-            timelineContainer.innerHTML = '';
-        }
+        const features = getFeatures(currentProject);
+        features.push(newFeature);
+        saveFeatures(currentProject, features);
+        renderFeatures(currentProject);
+        addFeatureForm.reset();
+    });
 
-        projectTimelineBtns.forEach(btn => {
-            btn.addEventListener('click', () => {
-                const projectName = btn.dataset.project;
-                openTimelineModal(projectName);
+    featureListContainer.addEventListener('click', (e) => {
+        const id = e.target.dataset.id;
+        if (!id) return;
+
+        let features = getFeatures(currentProject);
+
+        if (e.target.type === 'checkbox') {
+            features = features.map(f => f.id == id ? { ...f, completed: !f.completed } : f);
+        } else if (e.target.tagName === 'BUTTON') {
+            features = features.filter(f => f.id != id);
+        }
+        
+        saveFeatures(currentProject, features);
+        renderFeatures(currentProject);
+    });
+
+    // --- PROJECT TIMELINE MODAL LOGIC ---
+    // Ensure Mermaid is loaded before you initialize it
+    if (typeof mermaid !== 'undefined') {
+        mermaid.initialize({ startOnLoad: false, theme: 'dark' });
+    }
+
+    const timelineModal = document.getElementById('project-timeline-modal');
+    const closeTimelineModalBtn = document.getElementById('close-timeline-modal-btn');
+    const timelineModalTitle = document.getElementById('timeline-modal-title');
+    const timelineContainer = document.getElementById('timeline-container');
+    const projectTimelineBtns = document.querySelectorAll('.project-timeline-btn');
+
+    function openTimelineModal(projectName) {
+        timelineModalTitle.innerText = `${projectName} - Timeline`;
+        const features = getFeatures(projectName);
+        
+        let ganttChart = `
+            gantt
+            dateFormat  YYYY-MM-DD
+            title       Project Timeline
+        `;
+
+        if (features.length > 0) {
+            // Sort features by start date to keep the Gantt chart organized
+            features.sort((a, b) => new Date(a.startDate) - new Date(b.startDate));
+            
+            // Group features into sections by name for clarity
+            const sections = {};
+            features.forEach(f => {
+                if (!sections[f.name]) sections[f.name] = [];
+                sections[f.name].push(f);
             });
-        });
 
-        closeTimelineModalBtn.addEventListener('click', closeTimelineModal);
-        timelineModal.addEventListener('click', (e) => {
-            if (e.target === timelineModal) {
-                closeTimelineModal();
+            for (const sectionName in sections) {
+                ganttChart += `
+section ${sectionName}`;
+                sections[sectionName].forEach(feature => {
+                    const state = feature.completed ? 'done' : 'active';
+                    // Use a unique ID for each task in Mermaid
+                    ganttChart += `
+${feature.name.replace(/:/g, '')} :${state}, task${feature.id}, ${feature.startDate}, ${feature.endDate}`;
+                });
             }
+
+        } else {
+            const today = new Date().toISOString().slice(0, 10);
+            ganttChart += `
+            section Getting Started
+            Define key features :done, task_init, ${today}, 1d
+            `;
+        }
+
+        timelineContainer.innerHTML = `<div class="mermaid">${ganttChart}</div>`;
+        if (typeof mermaid !== 'undefined') {
+            mermaid.init(undefined, timelineContainer.querySelector('.mermaid'));
+        }
+
+        timelineModal.classList.remove('hidden');
+        timelineModal.classList.add('flex');
+    }
+
+    function closeTimelineModal() {
+        timelineModal.classList.add('hidden');
+        timelineModal.classList.remove('flex');
+        timelineContainer.innerHTML = '';
+    }
+
+    projectTimelineBtns.forEach(btn => {
+        btn.addEventListener('click', () => {
+            const projectName = btn.dataset.project;
+            openTimelineModal(projectName);
         });
+    });
+
+    closeTimelineModalBtn.addEventListener('click', closeTimelineModal);
+    timelineModal.addEventListener('click', (e) => {
+        if (e.target === timelineModal) {
+            closeTimelineModal();
+        }
     });
 });
 </script>
