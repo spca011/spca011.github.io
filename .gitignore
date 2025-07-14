@@ -1,0 +1,12 @@
+# Jekyll
+_site/
+.jekyll-cache/
+.jekyll-metadata
+.sass-cache/
+
+# Node
+node_modules/
+
+# OS
+.DS_Store
+Thumbs.db 

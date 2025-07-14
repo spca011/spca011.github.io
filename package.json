@@ -1,0 +1,17 @@
+{
+  "name": "project-genesis",
+  "version": "1.0.0",
+  "description": "Project Genesis website.",
+  "main": "js/main.js",
+  "scripts": {
+    "build:css": "tailwindcss -i ./_styles/main.css -o ./assets/css/main.css --watch",
+    "serve": "bundle exec jekyll serve",
+    "dev": "concurrently \"npm run serve\" \"npm run build:css\""
+  },
+  "author": "Your Name",
+  "license": "ISC",
+  "dependencies": {
+    "concurrently": "^7.0.0",
+    "tailwindcss": "^3.0.0"
+  }
+} 

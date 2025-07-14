@@ -2,65 +2,22 @@
 <html lang="en" class="scroll-smooth">
 <head>
     <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <!-- The page title will be dynamically changed -->
     <title>{{ page.title | default: "Project Kick-off & Dev Log" }}</title>
-    <script src="https://cdn.tailwindcss.com"></script>
     <script src="https://cdn.jsdelivr.net/npm/mermaid/dist/mermaid.min.js"></script>
+    <link rel="stylesheet" href="{{ '/assets/css/main.css' | relative_url }}">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@400;700;900&family=Inter:wght@400;700;900&display=swap" rel="stylesheet">
-    <style>
-        :root {
-            --background-color: #111827; /* bg-gray-900 */
-        }
-        /* Using Inter as the primary font, with Noto Sans KR as a fallback */
-        body { font-family: 'Inter', 'Noto Sans KR', sans-serif; background-color: #111827; color: #F3F4F6; }
-        .gradient-text {
-            background: linear-gradient(90deg, #38bdf8, #818cf8);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            background-clip: text;
-            color: transparent;
-            display: inline;
-        }
-        .card { background-color: #1F2937; border: 1px solid #374151; transition: transform 0.3s ease, box-shadow 0.3s ease; }
-        .card:hover { transform: translateY(-10px); box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.3), 0 10px 10px -5px rgba(0, 0, 0, 0.1); }
-        .fade-in-section { opacity: 0; transform: translateY(20px); transition: opacity 0.6s ease-out, transform 0.6s ease-out; }
-        .fade-in-section.is-visible { opacity: 1; transform: translateY(0); }
-        .blog-post { background-color: #1F2937; border-left: 4px solid #4f46e5; padding: 1.5rem; margin-bottom: 1.5rem; border-radius: 0 8px 8px 0; }
-        .blog-post-title { font-size: 1.5rem; font-weight: bold; color: #e5e7eb; margin-bottom: 0.25rem; }
-        .blog-post-date { font-size: 0.9rem; color: #9ca3af; margin-bottom: 1rem; }
-        .blog-post-content { font-size: 1rem; color: #d1d5db; line-height: 1.6; }
-        .blog-post-content h1,
-        .blog-post-content h2,
-        .blog-post-content h3,
-        .blog-post-content h4,
-        .blog-post-content h5,
-        .blog-post-content h6 {
-            color: #fff;
-            font-weight: bold;
-            margin-top: 2em;
-            margin-bottom: 0.5em;
-        }
-        .blog-post-content h1 { font-size: 2rem; }
-        .blog-post-content h2 { font-size: 1.5rem; }
-        .blog-post-content h3 { font-size: 1.25rem; }
-        .blog-post-content ul,
-        .blog-post-content ol {
-            margin-left: 1.5em;
-            margin-bottom: 1em;
-        }
-        .blog-post-content li {
-            margin-bottom: 0.5em;
-            list-style: disc inside;
-        }
-    </style>
 </head>
-<body class="antialiased">
+<body class="bg-gray-900 text-white font-sans antialiased">
 
     <!-- The actual content of each page is inserted here -->
-    {{ content }}
+    <main>
+        {{ content }}
+    </main>
 
     <footer id="contact" class="bg-gray-900 py-10 px-4 text-center text-gray-400">
         <div class="container mx-auto">
@@ -71,18 +28,6 @@
             <p class="text-sm text-gray-500 mt-8">Copyright © {{ site.time | date: '%Y' }} Next Level. All rights reserved.</p>
         </div>
     </footer>
-
-    <script>
-        const sections = document.querySelectorAll('.fade-in-section');
-        const observer = new IntersectionObserver((entries) => {
-            entries.forEach(entry => {
-                if (entry.isIntersecting) {
-                    entry.target.classList.add('is-visible');
-                }
-            });
-        }, { threshold: 0.1 });
-        sections.forEach(section => { observer.observe(section); });
-    </script>
 
 </body>
 </html>
